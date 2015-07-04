@@ -7,7 +7,10 @@ var sourcemaps = require('gulp-sourcemaps');
 var rename     = require("gulp-rename");
 var jshint     = require('gulp-jshint');
 var bump       = require('gulp-bump');
+var header     = require('gulp-header');
 var del        = require('del');
+
+var banner = '//<%= pkg.name %> <%= pkg.license %> License (c) 2015 <%= pkg.author %>\n';
 
 //////////////////////////////////////////////////////////////////////////////
 // Build
@@ -27,6 +30,7 @@ gulp.task('lint', function () {
 
 gulp.task('copy', ['cleanBuild'], function (cb) {
 	return gulp.src('./src/loader.js')
+		.pipe(header(banner, {pkg: packageJSON}))
 		.pipe(gulp.dest('./build'));
 });
 
@@ -38,7 +42,8 @@ gulp.task('copyDoc', ['cleanBuild'], function (cb) {
 gulp.task('compress', ['copy', 'copyDoc', 'cleanBuild'], function (cb) {
 	return gulp.src('./build/loader.js')
 		.pipe(sourcemaps.init())
-		.pipe(uglify())
+		.pipe(uglify({preserveComments: 'some'}))
+		.pipe(header(banner, {pkg: packageJSON}))
 		.pipe(rename('loader.min.js'))
 		.pipe(sourcemaps.write('maps'))
 		.pipe(gulp.dest('./build'));
@@ -62,7 +67,7 @@ gulp.task('copyBuild', ['cleanDist'], function (cb) {
 		.pipe(gulp.dest('./dist'));
 });
 
-gulp.task('bump',  function (cb) {
+gulp.task('bump', function (cb) {
 	gulp.src(['./package.json', './bower.json'])
 		.pipe(bump({type: 'patch', indent: 4}))
 		.pipe(gulp.dest('./'));
