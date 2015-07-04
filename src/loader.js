@@ -55,7 +55,7 @@ function scriptLoader(scriptsToLoad, onLoaded) {
 				} else {
 					callback();
 				}
-			}, 500);
+			});
 		})();
 	};
 
