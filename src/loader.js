@@ -4,8 +4,16 @@
  * @param onLoaded a callback that is called once ALL scripts have finished loading.
  */
 function scriptLoader(scriptsToLoad, onLoaded) {
+	//Prevents duplicate requests since the onerror event fires twice.
+	var requests = {};
+
 	var importScript = function (src, onSuccess, onError) {
+		if(!!requests[src]) {
+			return;
+		}
+
 		console.log('src = ' + src);
+
 		var scriptElement   = document.createElement('script');
 		scriptElement.src   = src;
 		scriptElement.async = false;
@@ -19,6 +27,7 @@ function scriptLoader(scriptsToLoad, onLoaded) {
 		}
 
 		document.head.appendChild(scriptElement);
+		requests[src] = true;
 
 		return scriptElement;
 	};
