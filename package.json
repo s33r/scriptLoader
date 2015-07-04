@@ -12,9 +12,14 @@
     "keywords": [
         "web",
         "script",
-        "load"
+        "load",
+        "cdn"
     ],
     "author": "Aaron Willows",
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/s33r/scriptLoader.git"
+    },
     "license": "MIT",
     "devDependencies": {
         "del": "^1.2.0",

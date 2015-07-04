@@ -43,16 +43,15 @@ gulp.task('build', ['compress', 'lint'], function (cb) {
 	cb();
 });
 
-
 //////////////////////////////////////////////////////////////////////////////
 // Release
 //////////////////////////////////////////////////////////////////////////////
-
 gulp.task('cleanDist', function (cb) {
 	del([
 		'./dist/**/**'
 	], cb);
 });
+
 gulp.task('copyBuild', ['cleanDist'], function (cb) {
 	return gulp.src('./build/**/**')
 		.pipe(gulp.dest('./dist'));

@@ -6,11 +6,13 @@
         "Aaron Willows (aaron@aaronwillows.com)"
     ],
     "description": "A small library to load javascript files on a web page.",
+    "moduleType": "globals",
     "main": "loader.js",
     "keywords": [
         "web",
         "script",
-        "load"
+        "load",
+        "cdn"
     ],
     "license": "MIT",
     "ignore": [
@@ -20,5 +22,9 @@
         "test",
         "tests",
         "doc"
-    ]
+    ],
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/s33r/scriptLoader.git"
+    }
 }
