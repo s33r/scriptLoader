@@ -26,11 +26,16 @@ gulp.task('lint', function () {
 });
 
 gulp.task('copy', ['cleanBuild'], function (cb) {
-	return gulp.src(['./src/loader.js', './doc/example.html'])
+	return gulp.src('./src/loader.js')
 		.pipe(gulp.dest('./build'));
 });
 
-gulp.task('compress', ['copy', 'cleanBuild'], function (cb) {
+gulp.task('copyDoc', ['cleanBuild'], function (cb) {
+	return gulp.src('./doc/**/**')
+		.pipe(gulp.dest('./build/doc'));
+});
+
+gulp.task('compress', ['copy', 'copyDoc', 'cleanBuild'], function (cb) {
 	return gulp.src('./build/loader.js')
 		.pipe(sourcemaps.init())
 		.pipe(uglify())
