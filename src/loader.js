@@ -43,11 +43,11 @@ function scriptLoader(scriptsToLoad, onLoaded) {
 					importScript(scriptObject.secondaryUrl, function () {
 						console.log('Loaded Secondary: ' + scriptObject.secondaryUrl);
 						counter--;
-					}, function () {
-						console.error('Failed to load primary or secondary: ' + scriptObject.secondaryUrl);
+					}, function() {
+						counter--;
 					});
 				} else {
-					console.error('Failed to load primary and no secondary is defined.');
+					counter--;
 				}
 			});
 		});
