@@ -9,19 +9,15 @@ var jshint     = require('gulp-jshint');
 var bump       = require('gulp-bump');
 var del        = require('del');
 
-
-//////////////////////////////////////////////////////////////////////////////
-// Clean
-//////////////////////////////////////////////////////////////////////////////
-gulp.task('clean', function (cb) {
-	del([
-		'./dist/**/**'
-	], cb);
-});
-
 //////////////////////////////////////////////////////////////////////////////
 // Build
 //////////////////////////////////////////////////////////////////////////////
+gulp.task('cleanBuild', function (cb) {
+	del([
+		'./build/**/**'
+	], cb);
+});
+
 gulp.task('lint', function () {
 	return gulp.src('./src/*.js')
 		.pipe(jshint(jshintConfig))
@@ -29,18 +25,18 @@ gulp.task('lint', function () {
 		.pipe(jshint.reporter('fail'));
 });
 
-gulp.task('copy', function (cb) {
+gulp.task('copy', ['cleanBuild'], function (cb) {
 	return gulp.src(['./src/loader.js', './doc/example.html'])
-		.pipe(gulp.dest('./dist'));
+		.pipe(gulp.dest('./build'));
 });
 
-gulp.task('compress', ['copy'], function (cb) {
-	return gulp.src('./dist/loader.js')
+gulp.task('compress', ['copy', 'cleanBuild'], function (cb) {
+	return gulp.src('./build/loader.js')
 		.pipe(sourcemaps.init())
 		.pipe(uglify())
 		.pipe(rename('loader.min.js'))
 		.pipe(sourcemaps.write('maps'))
-		.pipe(gulp.dest('./dist'));
+		.pipe(gulp.dest('./build'));
 });
 
 gulp.task('build', ['compress', 'lint'], function (cb) {
@@ -51,13 +47,24 @@ gulp.task('build', ['compress', 'lint'], function (cb) {
 //////////////////////////////////////////////////////////////////////////////
 // Release
 //////////////////////////////////////////////////////////////////////////////
-gulp.task('bump', function (cb) {
+
+gulp.task('cleanDist', function (cb) {
+	del([
+		'./dist/**/**'
+	], cb);
+});
+gulp.task('copyBuild', ['cleanDist'], function (cb) {
+	return gulp.src('./build/**/**')
+		.pipe(gulp.dest('./dist'));
+});
+
+gulp.task('bump',  function (cb) {
 	gulp.src(['./package.json', './bower.json'])
 		.pipe(bump({type: 'patch', indent: 4}))
 		.pipe(gulp.dest('./'));
 });
 
-gulp.task('release', ['bump'], function (cb) {
+gulp.task('release', ['bump', 'copyBuild'], function (cb) {
 	cb();
 });
 

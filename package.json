@@ -1,13 +1,12 @@
 {
     "name": "scriptloader",
-    "version": "1.0.1",
+    "version": "1.0.4",
     "description": "A small library to load javascript files on a web page.",
     "main": "loader.js",
     "jshintConfig": ".jshintrc",
     "scripts": {
-        "clean": "gulp clean",
-        "build": "gulp clean && gulp build",
-        "release": "gulp clean && gulp build && gulp release",
+        "build": "gulp build",
+        "release": "gulp build && gulp release",
         "test": "karma start"
     },
     "keywords": [
