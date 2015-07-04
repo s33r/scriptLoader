@@ -1,3 +1,6 @@
+var packageJSON  = require('./package');
+var jshintConfig = packageJSON.jshintConfig;
+
 var gulp       = require('gulp');
 var uglify     = require('gulp-uglify');
 var sourcemaps = require('gulp-sourcemaps');
@@ -13,8 +16,9 @@ gulp.task('clean', function (cb) {
 
 gulp.task('lint', function () {
 	return gulp.src('./src/*.js')
-		.pipe(jshint())
-		.pipe(jshint.reporter('default'));
+		.pipe(jshint(jshintConfig))
+		.pipe(jshint.reporter('default'))
+		.pipe(jshint.reporter('fail'));
 });
 
 gulp.task('copy', ['clean'], function (cb) {
