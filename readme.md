@@ -39,3 +39,9 @@ A **URL String** is simple a string that points to the location of the script to
 
 ###Array
 An **Array** can contain **ScriptObjects** or **URL Strings**. Unlike the parent array, every item is downloaded in parallel.
+
+TODO
+================================================================
+* Find something faster than setTimeout.
+* Add ability to load CSS
+* Add test suite.
