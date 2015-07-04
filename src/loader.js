@@ -32,7 +32,7 @@ function scriptLoader(scriptsToLoad, onLoaded) {
 
 	var loadAsync = function (asyncScripts, callback) {
 		var scriptsProxy = asyncScripts;
-		if(!Array.isArray(scriptsProxy) && (typeof scriptsProxy === "string")) {
+		if(!Array.isArray(scriptsProxy)) {
 			scriptsProxy = [scriptsProxy];
 		}
 
