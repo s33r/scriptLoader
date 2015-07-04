@@ -1,3 +1,4 @@
+//scriptloader MIT License (c) 2015 Aaron C. Willows
 /**
  * Loads a tiered set of scripts asynchronously. Includes the option to load fallback scripts as well.
  * @param scriptsToLoad An array of arrays of scripts to load.
@@ -31,13 +32,26 @@ function scriptLoader(scriptsToLoad, onLoaded) {
 	};
 
 	var loadAsync = function (asyncScripts, callback) {
-		var counter = asyncScripts.length;
-		asyncScripts.forEach(function (scriptObject) {
-			importScript(scriptObject.primaryUrl, function (event) {
+		var scriptsProxy = asyncScripts;
+		if(!Array.isArray(scriptsProxy)) {
+			scriptsProxy = [scriptsProxy];
+		}
+
+		var counter = scriptsProxy.length;
+		scriptsProxy.forEach(function (scriptObject) {
+			var proxy = scriptObject;
+
+			if(typeof proxy === "string") {
+				proxy = {
+					primaryUrl: scriptObject
+				};
+			}
+
+			importScript(proxy.primaryUrl, function (event) {
 				counter--;
 			}, function () {
-				if(!!scriptObject.secondaryUrl) {
-					importScript(scriptObject.secondaryUrl, function () {
+				if(!!proxy.secondaryUrl) {
+					importScript(proxy.secondaryUrl, function () {
 						counter--;
 					}, function() {
 						counter--;
