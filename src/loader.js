@@ -12,8 +12,6 @@ function scriptLoader(scriptsToLoad, onLoaded) {
 			return;
 		}
 
-		console.log('src = ' + src);
-
 		var scriptElement   = document.createElement('script');
 		scriptElement.src   = src;
 		scriptElement.async = false;
@@ -36,12 +34,10 @@ function scriptLoader(scriptsToLoad, onLoaded) {
 		var counter = asyncScripts.length;
 		asyncScripts.forEach(function (scriptObject) {
 			importScript(scriptObject.primaryUrl, function (event) {
-				console.log('Loaded Primary: ' + scriptObject.primaryUrl);
 				counter--;
 			}, function () {
 				if(!!scriptObject.secondaryUrl) {
 					importScript(scriptObject.secondaryUrl, function () {
-						console.log('Loaded Secondary: ' + scriptObject.secondaryUrl);
 						counter--;
 					}, function() {
 						counter--;
@@ -55,7 +51,6 @@ function scriptLoader(scriptsToLoad, onLoaded) {
 		(function loop() {
 			setTimeout(function () {
 				if (counter > 0) {
-					console.log('counter Check: ' + counter);
 					loop();
 				} else {
 					callback();
