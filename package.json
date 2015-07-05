@@ -2,7 +2,7 @@
     "name": "scriptloader",
     "version": "1.0.6",
     "description": "A small library to load javascript files on a web page.",
-    "main": "loader.js",
+    "main": "gulpfile.js",
     "jshintConfig": ".jshintrc",
     "scripts": {
         "build": "gulp build",

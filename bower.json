@@ -7,7 +7,7 @@
     ],
     "description": "A small library to load javascript files on a web page.",
     "moduleType": "globals",
-    "main": "loader.js",
+    "main": "gulpfile.js",
     "keywords": [
         "web",
         "script",
